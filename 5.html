@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" :value="number" @click="number++">
+        <br>
+        姓:<input type="text" v-model="lastName">
+        <br>
+        名:<input type="text" v-model="firstName">
+        <br>
+        {{ fullName }}
+        <br>
+        {{ fullNameMethod() }}
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        // computed 是懶得重算，只在需要時才算一次，省力又高效。
+        // methods 是每次叫它就算，簡單直接，但可能浪費一些資源。
+        Vue.createApp({
+            data() {
+                return {
+                    firstName: '',
+                    lastName: '',
+                    number: 0
+                }
+            },
+            // 把 data fuction 變成動態的 => computed => 一定要 return
+            // 只有當相關的數據改變時，computed 才會重新計算
+            computed: {
+                fullName() {
+                    console.log('computed')
+                    return this.lastName + this.firstName
+                }
+            },
+            // 一般的function ，每次執行都會重新計算 (其他東西動它也會動)
+            methods: {
+                fullNameMethod() {
+                    console.log('methods')
+                    return this.lastName + this.firstName
+                }
+            },
+            // 監聽 (修改後newValue及修改前oldValue的值)
+            watch: {
+                firstName(newValue, oldValue) {
+                    console.log('firstName', newValue, oldValue)
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

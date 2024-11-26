@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表單的綁定</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-model 綁定使用者輸入的值， 雙向綁定 => Vue 的響應式-->
+        <!-- .trim(修飾符) 自動移除前後空白 -->
+        <!-- .lazy(修飾符) 在 change 時才更新(打完才檢查) -->
+        <input type="text" v-model.lazy="form.text">
+        <p>{{ form.text }}</p>
+        <!-- 
+            radio、checkbox 用 v-model 分組
+            v-model => 使用者輸入的值
+            value   => 欄位本身的值
+            沒有使用: 的資料型態是文字
+        -->
+        <!-- value=" " => 以下都是文字!!!-->
+        <input type="radio" v-model="form.radio1" value="1">
+        <input type="radio" v-model="form.radio1" value="2">
+        <input type="radio" v-model="form.radio1" value="3">
+        <input type="radio" v-model="form.radio1" value="true">
+        <input type="radio" v-model="form.radio1" value="false">
+        <input type="radio" v-model="form.radio1" value="abc">
+        <br>
+        <!-- : 是 v-bind: (bind 綁定) ， "" 內是 js 範圍 ( => 才會是布林值)，只有'abc'是文字-->
+        <input type="radio" v-model="form.radio2" :value="1">
+        <input type="radio" v-model="form.radio2" :value="2">
+        <input type="radio" v-model="form.radio2" :value="3">
+        <input type="radio" v-model="form.radio2" :value="true">
+        <input type="radio" v-model="form.radio2" :value="false">
+        <input type="radio" v-model="form.radio2" :value="'abc'">
+        <br>
+        <!--option 值 i 索引值 -->
+        <template v-for="(option, i) in checkboxOptions">
+            <pre>{{ option }}</pre>
+            <label :for="'check' + i">{{ option.label }}</label>
+            <input type="checkbox" :id="'check' + i " :value="option.value" v-model="form.ckeckbox">
+        </template>
+
+        <select v-model="form.select">
+            <option v-for="option in selectOptions" :value="option.value">{{ option.label }}</option>
+        </select>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            // data()是一個儲存數據的地方
+            data() {
+                return {
+                    form: {
+                        text: '',
+                        radio1: undefined,
+                        radio2: undefined,
+                        checkbox: [],
+                        select: ''
+                    },
+                    checkboxOptions: [
+                        { value: '50', label: '50嵐' },
+                        { value: 'kbk', label: '可不可' },
+                    ],
+                    selectOptions: [
+                        { value: 'v', label: 'Vue' },
+                        { value: 'a', label: 'Angular' },
+                        { value: 'r', label: 'React' },
+                    ]
+                }
+
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

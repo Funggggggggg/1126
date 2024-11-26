@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>綁定標籤屬性</title>
+    <style>
+        .text-red {
+            color: red;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 綁定標籤屬性 -->
+        <img v-bind:src="image" height="50">
+        <img :src="image" height="50">
+        <a :href="link.url">{{ link.text }}</a>
+
+        <!-- 綁定 style -->
+        <p :style="textStyle">我把知道同步一顆許多，想法版權，值得丈。</p>
+        <!-- 物件的值與名稱一樣，可以簡寫(textAlign) -->
+        <p :style="{ color: textColor, textAlign }">我把知道同步一顆許多，想法版權，值得丈。</p>
+
+        <!-- 綁定 class ，有物件、陣列兩種-->
+        <p :class="textClassObject">固定外掛他在認定研究到我清除互相轉帖上去，走出一件及其只不過一體路線思路，投票不可能儘管堅持，逐漸。</p>
+        <p :class="textClassArray">固定外掛他在認定研究到我清除互相轉帖上去，走出一件及其只不過一體路線思路，投票不可能儘管堅持，逐漸。</p>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    image: 'https://github.com/vuejs.png',
+                    link: {
+                        url: 'https://x.com',
+                        text: 'Twitter'
+                    },
+                    // 分開綁跟一次綁
+                    textStyle: {
+                        color: 'lightblue',
+                        textAlign: 'crnter', 'background-color': 'gray'
+                    },
+                    textColor: 'pink',
+                    textAlign: 'right',
+                    // 直接綁 calss 
+                    textClassObject: {
+                        'text-red': true,
+                        'text-center': false
+                    },
+                    textClassArray: ['text-center']
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件</title>
+</head>
+
+<body>
+    <!-- 看不懂 -->
+    <div id="app">
+        <input type="button" value="notify" v-on:click="notify">
+        <!-- 簡寫 -->
+        <input type="button" value="notify" @click="notify">
+        <input type="button" value="notify2" @click="notify2('aaa')">
+        <input type="button" value="notify2" @click="notify2('aaa, $event')">
+        <hr>
+        <input type="text" v-model="input" @keydown.enter="add">
+        <ul>
+            <li v-for="item in list">{{ item }}</li>
+        </ul>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    input: '',
+                    list: []
+                }
+            },
+            // 跟 data 同一層
+            methods: {
+                notify(event) {
+                    console.log(event)
+                    alert(123)
+                },
+                notify2(text) {
+                    alert(text)
+                },
+                notify3(text, event) {
+                    console.log(event)
+                    alert(text)
+                },
+                add() {
+                    if (this.input.length === 0) return
+
+                    this.list.push(this.input)
+                    this.notify2(this.input)
+                    this.input = ''
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>
